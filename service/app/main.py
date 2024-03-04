@@ -3,7 +3,7 @@ Creating the FastAPI application
 """
 
 from fastapi import FastAPI
-from app.routers import dummy
+from app.routers import demo
 from app import __version__
 
 
@@ -20,7 +20,7 @@ def create_app() -> FastAPI:
         description="Start your project here",
     )
 
-    app.include_router(dummy.router)
+    app.include_router(demo.router)
     return app
 
 

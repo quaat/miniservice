@@ -8,12 +8,13 @@ services:
       context: "./service"
       target: "development"
     ports:
-      - "8080:8080"
+      - "5000:5000"
       - "5678:5678" # debug
   redis:
     image: redis/redis-stack:latest
     ports:
       - "8001:8001" # RedisInsight
+      - "6379:6379" # Redis
 
 networks:
   default:
