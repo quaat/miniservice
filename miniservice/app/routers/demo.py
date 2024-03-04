@@ -1,7 +1,30 @@
 from fastapi import APIRouter, Depends
-from typing import Dict
+from typing import AsyncGenerator, Dict
+from redis.asyncio import Redis, from_url
 from core.models.person import Person
-from core.modules.cacheservice import CacheService, get_cache_service
+from core.modules.cacheservice import CacheService
+
+
+# Factory function for cache backend
+async def get_redis_cache() -> AsyncGenerator[Redis, None]:
+    """
+    Asynchronous generator that provides a Redis connection.
+
+    Establishes and yields a Redis connection, ensuring the connection is closed after use.
+    """
+    redis = await from_url("redis://redis:6379")
+    try:
+        yield redis
+    finally:
+        await redis.aclose()
+
+# Factory function for cache service with dependency injection
+async def get_cache_service(cache: Redis = Depends(get_redis_cache)) -> CacheService:
+    """
+    Dependency that provides a CacheService instance.
+    """
+    return CacheService(cache)
+
 
 router = APIRouter(prefix="/person")
 

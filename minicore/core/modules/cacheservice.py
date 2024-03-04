@@ -1,30 +1,26 @@
 import hashlib
-from redis.asyncio import Redis, from_url
 from core.models.person import Person
-from fastapi import HTTPException, Depends
-from typing import AsyncGenerator
+from fastapi import HTTPException
+from typing import Any, Protocol, runtime_checkable
 import json
 
+@runtime_checkable
+class ICacheBackend(Protocol):
+    async def set(self, key: str, value: Any) -> None:
+        ...
 
-async def get_redis_cache() -> AsyncGenerator[Redis, None]:
-    """
-    Asynchronous generator that provides a Redis connection.
+    async def get(self, key: str) -> Any:
+        ...
 
-    Establishes and yields a Redis connection, ensuring the connection is closed after use.
-    """
-    redis = await from_url("redis://redis:6379")
-    try:
-        yield redis
-    finally:
-        await redis.aclose()
-
+    async def aclose(self):
+        ...
 
 class CacheService:
     """
     A service for caching and retrieving Person objects in Redis.
     """
 
-    def __init__(self, cache: Redis):
+    def __init__(self, cache: ICacheBackend):
         self.cache = cache
 
     async def store_person(self, person: Person) -> str:
@@ -60,10 +56,3 @@ class CacheService:
             raise HTTPException(status_code=404, detail="Person not found")
         person_dict = json.loads(result.decode("utf-8"))
         return Person(**person_dict)
-
-
-async def get_cache_service(cache: Redis = Depends(get_redis_cache)) -> CacheService:
-    """
-    Dependency that provides a CacheService instance.
-    """
-    return CacheService(cache)
