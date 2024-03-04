@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from typing import Dict
-from models.person import Person
-from modules.cacheservice import CacheService, get_cache_service
+from core.models.person import Person
+from core.modules.cacheservice import CacheService, get_cache_service
 
 router = APIRouter(prefix="/person")
 

@@ -19,7 +19,7 @@ RUN pip install -r requirements.txt
 FROM base as development
 COPY . .
 
-# Run static security check and linters
+RUN Run static security check and linters
 #RUN pylint app
 
 # Run with reload option

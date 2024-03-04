@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minicore"
+version = "0.1.0"
+description = "A brief description of your project"
+authors = [
+    { name = "Thomas", email = "thomas@example.com" },
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = [    
+    "fastapi>=0.110",
+    "requests>=2.24",
+    "pydantic>=2.6.3",
+    "typing>=3.7.4"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "flake8>=3.8",
+]
+
+[tool.setuptools]
+packages = ["core.models", "core.modules"]
+
