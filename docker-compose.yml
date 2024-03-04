@@ -11,4 +11,11 @@ services:
       - "8080:8080"
       - "5678:5678" # debug
   redis:
-    image: redis:latest
+    image: redis/redis-stack:latest
+    ports:
+      - "8001:8001" # RedisInsight
+
+networks:
+  default:
+    name: scinet
+    external: true

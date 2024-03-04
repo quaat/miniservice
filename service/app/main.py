@@ -1,6 +1,7 @@
 """
 Creating the FastAPI application
 """
+
 from fastapi import FastAPI
 from app.routers import dummy
 from app import __version__

@@ -1,6 +1,7 @@
 import requests
 from typing import Dict
 
+
 class APIClient:
     def __init__(self, base_url: str = "http://localhost:8000/dummy"):
         """
@@ -48,8 +49,6 @@ class APIClient:
             return response.json()
         except requests.exceptions.HTTPError as e:
             print(f"HTTP Error: {e}")
-            if response.status_code == 404:
-                return {"error": "Item not found"}
             return {"error": str(e)}
         except requests.exceptions.RequestException as e:
             print(f"Error communicating with the server: {e}")
