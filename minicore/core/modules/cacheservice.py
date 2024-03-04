@@ -1,9 +1,10 @@
 import hashlib
 from redis.asyncio import Redis, from_url
-from models.person import Person
+from core.models.person import Person
 from fastapi import HTTPException, Depends
 from typing import AsyncGenerator
 import json
+
 
 async def get_redis_cache() -> AsyncGenerator[Redis, None]:
     """
@@ -59,6 +60,7 @@ class CacheService:
             raise HTTPException(status_code=404, detail="Person not found")
         person_dict = json.loads(result.decode("utf-8"))
         return Person(**person_dict)
+
 
 async def get_cache_service(cache: Redis = Depends(get_redis_cache)) -> CacheService:
     """

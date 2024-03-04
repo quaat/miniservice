@@ -10,6 +10,8 @@ router = APIRouter(prefix="/person")
     summary="Populate Redis with a Person object",
     response_description="The hash key of the stored Person object",
 )
+
+
 async def store_person(
     person: Person, service: CacheService = Depends(get_cache_service)
 ) -> Dict[str, str]:

@@ -3,9 +3,9 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "minicore"
+name = "core"
 version = "0.1.0"
-description = "A brief description of your project"
+description = "Modularity testing"
 authors = [
     { name = "Thomas", email = "thomas@example.com" },
 ]

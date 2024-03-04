@@ -3,13 +3,14 @@ version: "3"
 services:
   miniservice:
     volumes:
-      - "./service:/app"
+      - "./miniservice:/app"
+      - "./minicore:/minicore"
     build:
-      context: "./service"
-      target: "development"
+      context: "./miniservice"      
     ports:
       - "5000:5000"
       - "5678:5678" # debug
+    entrypoint: ./entrypoint.sh
   redis:
     image: redis/redis-stack:latest
     ports:
